@@ -9,6 +9,7 @@
                 <div class="card-body">
                     <a style="margin: 19px;" href="/erasePost" class="btn btn-primary">Unposted Payments</a>
                     <a style="margin: 19px;" href="/erasePayment" class="btn btn-primary">Payments</a>
+                    <a style="margin: 19px;" href="/eraseReceipt" class="btn btn-primary">Receipts</a>
                 </div>
             </div>
         </div>

@@ -46,6 +46,13 @@ class ReceiptController extends Controller
 
     }
 
+    public function indexx()
+    {
+        $receipts = Receipt::orderBy('created_at', 'DESC')->paginate(10);
+        return view('receipts.indexx', compact('receipts'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -226,8 +233,24 @@ class ReceiptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
+        DB::transaction(function () use ($id) {
+            $receipt = Receipt::findOrFail($id);
+            $transaction = Transaction::where('ref', $receipt->ref)->firstOrFail();
+            $invoice = Invoice::findOrFail($receipt->invoice_id);
+
+            $transaction->entries()->delete();
+            $transaction->delete();
+
+            $invoice->paid = '0';
+            $invoice->save();
+
+            $receipt->delete();
+        });
+
+        return redirect('/eraseReceipt')->with('success', 'Receipt deleted!');
     }
 
     public function findInvoices($id)

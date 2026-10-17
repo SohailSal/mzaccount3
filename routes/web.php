@@ -90,4 +90,6 @@ Route::get('/eraser', function () {
 
 Route::get('/erasePayment', 'PaymentController@indexx')->middleware(['auth','admin']);
 
+Route::get('/eraseReceipt', 'ReceiptController@indexx')->middleware(['auth','admin']);
+
 Route::get('/erasePost', 'PostController@indexx')->middleware(['auth','admin']);
