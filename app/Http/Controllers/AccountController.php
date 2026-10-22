@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Transaction;
 use App\Entry;
 use App\Account;
+use App\Support\PdfFilename;
 use PDF;
 
 class AccountController extends Controller
@@ -120,6 +121,6 @@ class AccountController extends Controller
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('accounts/account', compact('account'));
-        return $pdf->stream($account->head_of_account . '.pdf');
+        return $pdf->stream(PdfFilename::sanitize($account->head_of_account).'.pdf');
     }
 }

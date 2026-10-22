@@ -25,26 +25,6 @@
         </div>
     </div>
 
-    <?php   $foo = -134500;
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-    ?>
-
-    <div class="col-sm-12">
-        <div class="form-group">
-            <strong>Currency:</strong>
-            {{ $fmt->formatCurrency($foo, "") }}
-            <br>
-            {{ $fmt->formatCurrency($foo, "Rs.") }}
-            <br>
-    <?php   $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
-            {{ $fmt->formatCurrency($foo,'Rs.') }}
-            <br>
-            {{$amt->format($foo)}}
-        </div>
-    </div>
 </div>
   </body>
   </html>

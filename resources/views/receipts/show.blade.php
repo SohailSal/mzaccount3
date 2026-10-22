@@ -11,12 +11,6 @@
 </div>
 
 
-    <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
-
 <div class="row">
     <div class="col-sm-12">
         <div class="form-group">
@@ -51,22 +45,21 @@
     <div class="col-sm-12">
         <div class="form-group">
             <strong>Cheque amount:</strong>
-            {{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($receipt->amount,'Rs.')) }}
+            {{ \App\Support\AmountFormatter::formatAmount($receipt->amount) }}
         </div>
     </div>
     <div class="col-sm-12">
         <div class="form-group">
             <strong>Income tax withheld:</strong>
-            {{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($receipt->itax,'Rs.')) }}
+            {{ \App\Support\AmountFormatter::formatAmount($receipt->itax) }}
         </div>
     </div>
     <div class="col-sm-12">
         <div class="form-group">
             <strong>Sales tax withheld:</strong>
-            {{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($receipt->stax,'Rs.')) }}
+            {{ \App\Support\AmountFormatter::formatAmount($receipt->stax) }}
         </div>
     </div>
 
 </div>
 @endsection
-

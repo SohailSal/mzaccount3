@@ -13,12 +13,7 @@
     <a style="margin: 5px;" href="{{ route('posts.create')}}" class="btn btn-primary">New Payment</a>
     <!-- <a href="{{action('PaymentController@getPayments',  ['id'=>'25', 'actual'=> '26'])}}" class="btn btn-primary">Payments PDF</a> -->
     </div>
-       <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
-    <div>
+       <div>
     {{$payments->links()}}
 </div>
   <table class="table table-striped">
@@ -39,7 +34,6 @@
             <td>{{$payment->date_of_payment}}</td>
             <td>{{$payment->account->head_of_account}}</td>
             <td>{{$payment->payee}}</td>
-            {{-- <td align='right'>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($payment->amount,'Rs.'))}}</td> --}}
             <td align='right'>{{ number_format($payment->amount, 2) }}</td>
             <td>
                 <a href="{{ route('payments.edit',$payment->id)}}" class="btn btn-primary">Edit</a>

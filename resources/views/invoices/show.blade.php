@@ -16,13 +16,7 @@
     </div>
 </div>
 
-    <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
         <div class="form-group">
             <strong>Ref:</strong>
@@ -70,9 +64,9 @@
                 <tr>
                     <td style="width: 70%; border-right: 1pt solid black;">{{$entry->description}}</td>
                     @if($loop->last)
-                    <td style=" margin:10px;padding:10px;border-top: 2px solid ; border-bottom: 5px double;" align="right"><strong>{{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry->amount,'Rs.')) }}</strong></td>
+                    <td style=" margin:10px;padding:10px;border-top: 2px solid ; border-bottom: 5px double;" align="right"><strong>{{ \App\Support\AmountFormatter::formatAmount($entry->amount) }}</strong></td>
                     @else
-                    <td style="width: 30%;" align="right">{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry->amount,'Rs.'))}}</td>
+                    <td style="width: 30%;" align="right">{{ \App\Support\AmountFormatter::formatAmount($entry->amount) }}</td>
                     @endif
                 </tr>
                 @endforeach
@@ -84,4 +78,3 @@
 
 </div>
 @endsection
-

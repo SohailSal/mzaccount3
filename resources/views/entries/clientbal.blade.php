@@ -21,12 +21,6 @@
 </head>
 <body>
     <?php
-            // $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::DECIMAL );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            // $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-
                 $accounts = App\Account::all();
                 $obalance = [];
                 $oite= 0;
@@ -85,8 +79,7 @@
                 {{$account->head_of_account}}
             </td>
             <td style="width: 10%; border-left: 1pt solid black;" align="right">
-                {{ $fmt->format($obalance[$loop->index]) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($obalance[$loop->index],'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($obalance[$loop->index]) }}
             </td>
         </tr>
         <?php $debit = $debit + $obalance[$loop->index]; ?>
@@ -96,8 +89,7 @@
                 <strong>Total</strong>
                 </td>
                 <td style="width: 10%; border-left: 1pt solid black; border-top: 1pt solid black; border-bottom: 3pt double black;" align="right">
-                {{ $fmt->format($debit) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($debit,'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($debit) }}
                 </td>
         </tr>
             </tbody>
@@ -115,7 +107,7 @@
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $word_space, $char_space, $angle);
+        $pdf->page_text($x, $y, $text, $font, $size, [0, 0, 0], $word_space, $char_space, $angle);
     }
 </script>
 </body>

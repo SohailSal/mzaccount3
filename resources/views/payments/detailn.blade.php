@@ -108,7 +108,7 @@
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $word_space, $char_space, $angle);
+        $pdf->page_text($x, $y, $text, $font, $size, [0, 0, 0], $word_space, $char_space, $angle);
     }
 </script>
 </body>

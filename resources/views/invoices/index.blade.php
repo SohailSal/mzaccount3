@@ -8,11 +8,6 @@
     </div>
   @endif
 
-    <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-    ?>
-
     <h1 class="display-5">Invoices</h1>
     <div>
     <a style="margin: 5px;" href="{{ route('home')}}" class="btn btn-primary">Home</a>
@@ -48,7 +43,6 @@
 
               @foreach($invoice->invoiceentries as $entry)
                 @if($loop->last)
-                {{-- <td align="right">{{ $fmt->formatCurrency($entry->amount,'Rs.') }}</td> --}}
                 <td align="right">{{ number_format($entry->amount, 2) }}</td>
                 @endif
               @endforeach

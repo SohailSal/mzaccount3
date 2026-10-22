@@ -9,6 +9,7 @@ use App\Transaction;
 use App\Entry;
 use App\Account;
 use App\Post;
+use App\Support\PdfFilename;
 use PDF;
 
 class PostController extends Controller
@@ -148,7 +149,7 @@ class PostController extends Controller
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('posts/upv', compact('post'));
-        return $pdf->stream($post->ref.'.pdf');
+        return $pdf->stream(PdfFilename::sanitize($post->ref).'.pdf');
     }
 
 }

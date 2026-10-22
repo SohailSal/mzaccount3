@@ -10,13 +10,7 @@
     </div>
 </div>
 
-    <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
-
-<div class="row">
+    <div class="row">
     <div class="col-sm-12">
         <div class="form-group">
             <strong>Ref:</strong>
@@ -56,9 +50,8 @@
     <div class="col-sm-12">
         <div class="form-group">
             <strong>Amount:</strong>
-            {{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($payment->amount,'Rs.')) }}
+            {{ \App\Support\AmountFormatter::formatAmount($payment->amount) }}
         </div>
     </div>
 </div>
 @endsection
-

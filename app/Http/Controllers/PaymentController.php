@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Payment;
+use App\Support\PdfFilename;
 use App\Transaction;
 use App\Entry;
 use App\Account;
@@ -135,7 +136,7 @@ class PaymentController extends Controller
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('payments/pv', compact('payment'));
-        return $pdf->stream($payment->ref.'.pdf');
+        return $pdf->stream(PdfFilename::sanitize($payment->ref).'.pdf');
     }
 
         public function getPaymentsRange(Request $request)
@@ -171,10 +172,6 @@ class PaymentController extends Controller
 
     public function getPaymentsn(Request $request)
     {
-            $fmt = new \NumberFormatter( 'en_GB', \NumberFormatter::CURRENCY );
-            $fmt->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, '');
-//dd($fmt);
             $tZone = new \DateTimeZone("Asia/Karachi");
             $dt = \Carbon\Carbon::now($tZone)->format('M d, Y - h:m a');
 //dd($dt);
@@ -194,14 +191,11 @@ class PaymentController extends Controller
                 'description' => $payment->description,
                 'payee' => $payment->payee,
                 'cheque' => $payment->cheque,
-  //              'amount' => str_replace(['Rs.','.00'],'',$fmt->formatCurrency($payment->amount,'Rs.')),
                 'amount' => $payment->amount,
                 ];
             });
 
  dd($paymentsn); 
-//            $total = str_replace(['Rs.','.00'],'',$fmt->formatCurrency($total,'Rs.'));
-
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('payments/detailn', compact('paymentsn','dt','total'))->setPaper('a4', 'landscape');

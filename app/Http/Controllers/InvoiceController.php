@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Invoice;
 use App\InvoiceEntry;
+use App\Support\PdfFilename;
 use App\Transaction;
 use App\Entry;
 use App\Account;
@@ -211,7 +212,7 @@ class InvoiceController extends Controller
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('invoices/invoice', compact('invoice'));
-        return $pdf->stream($invoice->ref.'.pdf');
+        return $pdf->stream(PdfFilename::sanitize($invoice->ref).'.pdf');
     }
 
     public function unpaid()

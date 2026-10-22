@@ -21,12 +21,6 @@
 </head>
 <body>
     <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-
-
             $dt = \Carbon\Carbon::now(new DateTimeZone('Asia/Karachi'))->format('M d, Y - h:m a');
 
             $totalr = 0;
@@ -80,13 +74,13 @@
                 {{$item->account->head_of_account}}
             </td>
             <td style="width: 15%; border-right: 1pt solid black;" align="right">
-                {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($item->amount,'Rs.'))}}
+                {{ \App\Support\AmountFormatter::formatAmount($item->amount) }}
             </td>
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
-                {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($item->itax,'Rs.'))}}
+                {{ \App\Support\AmountFormatter::formatAmount($item->itax) }}
             </td>
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
-                {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($item->stax,'Rs.'))}}
+                {{ \App\Support\AmountFormatter::formatAmount($item->stax) }}
             </td>
         </tr>
         <?php
@@ -99,9 +93,9 @@
             <td style="border-top: 1pt solid black;"></td>
             <td style="border-top: 1pt solid black;"></td>
             <td style="border-top: 1pt solid black;"></td>
-            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($totalr,'Rs.'))}}</strong></td>
-            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($totalt,'Rs.'))}}</strong></td>
-            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($totals,'Rs.'))}}</strong></td>
+            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{ \App\Support\AmountFormatter::formatAmount($totalr) }}</strong></td>
+            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{ \App\Support\AmountFormatter::formatAmount($totalt) }}</strong></td>
+            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{ \App\Support\AmountFormatter::formatAmount($totals) }}</strong></td>
         </tr>
             </tbody>
 
@@ -118,7 +112,7 @@
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $word_space, $char_space, $angle);
+        $pdf->page_text($x, $y, $text, $font, $size, [0, 0, 0], $word_space, $char_space, $angle);
     }
 </script>
 </body>

@@ -19,13 +19,6 @@
     </style>
 </head>
 <body>
-    <?php
-            // $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::DECIMAL );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            // $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
 <br>
 <br>
 <br>
@@ -93,11 +86,9 @@
             <td style=" border-right: 2px solid;">{{$entry->description}}</td>
             @endif
             @if($loop->last)
-            <td style=" margin:10px;padding:10px;border-top: 2px solid ; border-bottom: 5px double;" align="right"><strong>{{ $fmt->format($entry->amount) }}</strong></td>
-            {{-- <td style=" margin:10px;padding:10px;border-top: 2px solid ; border-bottom: 5px double;" align="right"><strong>{{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry->amount,'Rs.')) }}</strong></td> --}}
+            <td style=" margin:10px;padding:10px;border-top: 2px solid ; border-bottom: 5px double;" align="right"><strong>{{ \App\Support\AmountFormatter::formatAmount($entry->amount) }}</strong></td>
             @else
-            <td style="margin:10px;padding:10px;" align="right">{{ $fmt->format($entry->amount) }}</td>
-            {{-- <td style="margin:10px;padding:10px;" align="right">{{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry->amount,'Rs.')) }}</td> --}}
+            <td style="margin:10px;padding:10px;" align="right">{{ \App\Support\AmountFormatter::formatAmount($entry->amount) }}</td>
             @endif
         </tr>
     @endforeach
@@ -106,7 +97,7 @@
     <div style="margin:18px;">
         @foreach($invoice->invoiceEntries as $entry)
                 @if($loop->last)
-                <strong>Rupees {{$amt->format($entry->amount) }} only.</strong></td>
+                <strong>Rupees {{ \App\Support\AmountFormatter::spellOut($entry->amount) }} only.</strong>
                 @endif
         @endforeach
     <br>

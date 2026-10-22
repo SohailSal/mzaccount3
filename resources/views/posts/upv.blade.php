@@ -18,10 +18,6 @@
 </head>
 <body>
     <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
     ?>
 
 <div class="information">
@@ -45,11 +41,11 @@
         <tbody>
         <tr>
             <td style="width: 23%">Amount:</td>
-            <td style="width: 77%"><strong>Rs. {{ str_replace(['Rs.','.00'],'',$fmt->formatCurrency($post->amount,'Rs.')) }}</strong></td>
+            <td style="width: 77%"><strong>Rs. {{ \App\Support\AmountFormatter::formatAmount($post->amount) }}</strong></td>
         </tr>
         <tr>
             <td>In words:</td>
-            <td><strong>Rupees {{$amt->format($post->amount) }} only.</strong></td>
+            <td><strong>Rupees {{ \App\Support\AmountFormatter::spellOut($post->amount) }} only.</strong></td>
         </tr>
         <tr>
             <td>On account of:</td>

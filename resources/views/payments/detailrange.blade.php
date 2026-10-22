@@ -21,13 +21,6 @@
 </head>
 <body>
     <?php
-            // $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::DECIMAL );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            // $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-
-
             $dt = \Carbon\Carbon::now(new DateTimeZone('Asia/Karachi'))->format('M d, Y - h:m a');
 
             $total = 0;
@@ -96,8 +89,7 @@
                 {{$item['cheque']}}
             </td>
             <td style="border-right: 1pt solid black;" align="right">
-                {{ $fmt->format($item['amount']) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($item['amount'],'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($item['amount']) }}
             </td>
         </tr>
         <?php
@@ -111,8 +103,7 @@
             <td style="border-top: 1pt solid black;"></td>
             <td style="border-top: 1pt solid black;"></td>
             <td style="border-top: 1pt solid black;"></td>
-            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{ $fmt->format($total) }}</strong></td>
-            {{-- <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($total,'Rs.'))}}</strong></td> --}}
+            <td style="border-top: 1pt solid black; border-bottom: 3pt double black;" align="right"><strong>{{ \App\Support\AmountFormatter::formatAmount($total) }}</strong></td>
         </tr>
             </tbody>
 
@@ -129,7 +120,7 @@
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $word_space, $char_space, $angle);
+        $pdf->page_text($x, $y, $text, $font, $size, [0, 0, 0], $word_space, $char_space, $angle);
     }
 </script>
 </body>

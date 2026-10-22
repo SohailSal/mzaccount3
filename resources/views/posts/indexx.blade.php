@@ -11,12 +11,7 @@
     <div>
     <a style="margin: 5px;" href="{{ route('home')}}" class="btn btn-primary">Home</a>
     </div>
-       <?php
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-    ?>
-    <div>
+       <div>
     {{$posts->links()}}
 </div>
   <table class="table table-striped">
@@ -37,7 +32,7 @@
             <td>{{$post->date_of_payment}}</td>
             <td>{{$post->account->head_of_account}}</td>
             <td>{{$post->payee}}</td>
-            <td align='right'>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($post->amount,'Rs.'))}}</td>
+            <td align='right'>{{ \App\Support\AmountFormatter::formatAmount($post->amount) }}</td>
             <!-- <td>
                 <a href="{{ route('posts.show',$post->id)}}">Show</a>
           	</td> -->

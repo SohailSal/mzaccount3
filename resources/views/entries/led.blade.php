@@ -21,12 +21,6 @@
 </head>
 <body>
     <?php
-            // $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::DECIMAL );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            // $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-
             $prebal = 0;
             $lastbalance = 0;
             $ite = 0;
@@ -114,8 +108,7 @@
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
             </td>
             <td style="width: 10%" align="right">
-            <strong> {{ $fmt->format($prebal) }} </strong>
-            {{-- <strong> {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($prebal,'Rs.'))}} </strong> --}}
+            <strong> {{ \App\Support\AmountFormatter::formatAmount($prebal) }} </strong>
             </td>
         </tr>
 
@@ -137,18 +130,15 @@
 
             </td>
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
-                {{ $fmt->format($entry['debit']) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry['debit'],'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($entry['debit']) }}
 
             </td>
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
-                {{ $fmt->format($entry['credit']) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry['credit'],'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($entry['credit']) }}
 
             </td>
             <td style="width: 10%" align="right">
-                {{ $fmt->format($balance[$loop->index]) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($balance[$loop->index],'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($balance[$loop->index]) }}
 
             </td>
         </tr>
@@ -168,13 +158,11 @@
             <td style="width: 40%; border-right: 1pt solid black;border-top:1pt solid black;">
             </td>
             <td style="width: 10%; border-right: 1pt solid black;border-top:1pt solid black;border-bottom:3pt double black;" align="right">
-                <strong>{{ $fmt->format($debits) }}</strong>
-                {{-- <strong>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($debits,'Rs.'))}}</strong> --}}
+                <strong>{{ \App\Support\AmountFormatter::formatAmount($debits) }}</strong>
 
             </td>
             <td style="width: 10%; border-right: 1pt solid black;border-top:1pt solid black;border-bottom:3pt double black;" align="right">
-                <strong>{{ $fmt->format($credits) }}</strong>
-                {{-- <strong>{{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($credits,'Rs.'))}}</strong> --}}
+                <strong>{{ \App\Support\AmountFormatter::formatAmount($credits) }}</strong>
 
             </td>
             <td style="width: 10%; border-top:1pt solid black;" align="right">
@@ -198,7 +186,7 @@
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $word_space, $char_space, $angle);
+        $pdf->page_text($x, $y, $text, $font, $size, [0, 0, 0], $word_space, $char_space, $angle);
     }
 </script>
 </body>

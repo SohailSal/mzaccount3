@@ -21,12 +21,6 @@
 </head>
 <body>
     <?php
-            // $fmt = new NumberFormatter( 'en_GB', NumberFormatter::CURRENCY );
-            $fmt = new NumberFormatter( 'en_GB', NumberFormatter::DECIMAL );
-            $amt = new NumberFormatter( 'en_GB', NumberFormatter::SPELLOUT );
-            $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 0);
-            // $fmt->setSymbol(NumberFormatter::CURRENCY_SYMBOL, '');
-
             $balance = [];
             $lastbalance = 0;
             $enties = App\Entry::where('account_id',$account->id)->get();
@@ -103,18 +97,15 @@
 
             </td>
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
-                {{ $fmt->format($entry->debit) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry->debit,'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($entry->debit) }}
 
             </td>
             <td style="width: 10%; border-right: 1pt solid black;" align="right">
-                {{ $fmt->format($entry->credit) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($entry->credit,'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($entry->credit) }}
 
             </td>
             <td style="width: 10%" align="right">
-                {{ $fmt->format($balance[$loop->index]) }}
-                {{-- {{str_replace(['Rs.','.00'],'',$fmt->formatCurrency($balance[$loop->index],'Rs.'))}} --}}
+                {{ \App\Support\AmountFormatter::formatAmount($balance[$loop->index]) }}
 
             </td>
         </tr>
@@ -134,7 +125,7 @@
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $word_space, $char_space, $angle);
+        $pdf->page_text($x, $y, $text, $font, $size, [0, 0, 0], $word_space, $char_space, $angle);
     }
 </script>
 </body>
